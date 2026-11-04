@@ -1,0 +1,51 @@
+import { test, expect } from '@playwright/test';
+
+test('asignación: alternativas, modificación confirmada, calendario, auditoría y cancelación', async ({ page }) => {
+  await page.goto('/login');
+  await page.getByLabel('Correo electrónico').fill('e2e-admin@example.edu');
+  await page.getByLabel('Contraseña', { exact: true }).fill('Only-E2E!92741');
+  await page.getByRole('button', { name: 'Iniciar sesión', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Dashboard', exact: true })).toBeVisible();
+  const csrf = (await (await page.request.get('/api/auth/csrf/')).json()).csrfToken;
+  async function post(path: string, data: object) {
+    const response = await page.request.post('/api/' + path, { headers: { 'X-CSRFToken': csrf }, data });
+    expect(response.ok()).toBeTruthy(); return response.json();
+  }
+  const stamp = Date.now();
+  const teacher = await post('teachers/', { name: 'Docente horario ' + stamp, email: 'schedule' + stamp + '@example.edu' });
+  const subject = await post('subjects/', { name: 'Asignatura horario', code: 'H' + stamp });
+  const room = await post('classrooms/', { name: 'Aula horario ' + stamp, capacity: 20, equipment: ['computadores'], availability: [{ weekday: 0, start: '08:00', end: '12:00' }] });
+  await post('classrooms/' + room.id + '/validate-capacity/', { value: 20, note: 'Validación sintética E2E' });
+  const course = await post('courses/', { code: 'C' + stamp, name: 'Curso horario', subject: subject.id, teacher: teacher.id, enrollment: 15, required_equipment: ['computadores'], meetings: [{ weekday: 0, start: '08:00', end: '10:00' }] });
+  await page.getByRole('link', { name: 'Horarios', exact: true }).click();
+  await page.getByRole('link', { name: 'Consultar alternativas', exact: true }).click();
+  await page.getByLabel('Curso', { exact: true }).selectOption(String(course.id));
+  await page.getByLabel('Inicio del período').fill('2027-01-04');
+  await page.getByLabel('Fin del período').fill('2027-01-10');
+  await page.getByRole('button', { name: 'Buscar alternativas' }).click();
+  await page.getByRole('button', { name: 'Crear propuesta para ' + room.name, exact: true }).click();
+  await expect(page.getByRole('heading', { name: /Propuesta #/ })).toBeVisible();
+  const proposalUrl = page.url();
+  await page.getByLabel('Inicio 1', { exact: true }).fill('09:00');
+  await page.getByLabel('Fin 1', { exact: true }).fill('11:00');
+  await page.getByLabel('Motivo de la decisión').fill('Cambio de franja revisado en prueba E2E');
+  await page.getByRole('button', { name: 'Revisar y confirmar' }).click();
+  await expect(page.getByRole('region', { name: 'Confirmación de decisión' })).toBeVisible();
+  await page.getByRole('button', { name: 'Confirmar decisión', exact: true }).click();
+  await expect(page.getByText('Aceptada', { exact: true })).toBeVisible();
+  await page.reload();
+  await expect(page.getByText('Aceptada', { exact: true })).toBeVisible();
+  await page.screenshot({ path: '../tmp/proposal-desktop.png', fullPage: true });
+  await page.goto('/horarios?classroom=' + room.id + '&week=2027-01-04');
+  await expect(page.getByText('75%', { exact: true })).toBeVisible();
+  await expect(page.getByText('09:00–11:00', { exact: true })).toBeVisible();
+  await page.screenshot({ path: '../tmp/schedule-desktop.png', fullPage: true });
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: '../tmp/schedule-mobile.png', fullPage: true });
+  await page.goto(proposalUrl);
+  await page.getByLabel('Motivo de la decisión').fill('Fin de la prueba: liberar reserva');
+  await page.getByRole('button', { name: 'Revisar y confirmar' }).click();
+  await page.getByRole('button', { name: 'Confirmar decisión', exact: true }).click();
+  await expect(page.getByText('Cancelada', { exact: true })).toBeVisible();
+});

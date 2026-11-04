@@ -1,0 +1,19 @@
+Django==5.2.18
+djangorestframework==3.16.1
+psycopg==3.3.6
+psycopg-binary==3.3.6
+python-dotenv==1.2.4
+asgiref==3.12.1
+sqlparse==0.6.0
+tzdata==2026.5
+gunicorn==23.0.0; sys_platform != "win32"
+httpx==0.28.1
+reportlab==5.1.0
+pillow==13.0.0
+charset-normalizer==3.5.2
+httpcore==1.0.9
+h11==0.16.0
+anyio==4.15.1
+certifi==2026.10.19
+idna==3.20
+typing_extensions==4.16.0

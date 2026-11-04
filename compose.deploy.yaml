@@ -1,0 +1,90 @@
+name: smartcampus
+x-backend: &backend
+  image: smartcampus-backend:local
+  build:
+    context: .
+    dockerfile: backend/Dockerfile
+  env_file: .env.deploy
+  environment:
+    DATABASE_ENGINE: postgresql
+    DJANGO_DEBUG: "false"
+    POSTGRES_HOST: db
+    VISION_SERVICE_URL: http://vision:8002
+    MEDIA_ROOT: /app/private-media
+    TRUST_PROXY: "true"
+  volumes:
+    - private_media:/app/private-media
+    - static_files:/app/staticfiles
+  restart: unless-stopped
+services:
+  db:
+    image: postgres:17
+    env_file: .env.deploy
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+    restart: unless-stopped
+  vision:
+    build:
+      context: .
+      dockerfile: services/vision/Dockerfile
+    env_file: .env.deploy
+    environment:
+      VISION_DATA_DIR: /data
+      VISION_MODEL_PATH: /models/yolo11n.pt
+    volumes:
+      - vision_data:/data
+      - ./services/vision/models:/models:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import json,urllib.request; assert json.load(urllib.request.urlopen('http://localhost:8002/health'))['model_available']"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+  backend:
+    <<: *backend
+    command: ["sh", "-c", "python manage.py migrate --noinput && python manage.py createcachetable && python manage.py collectstatic --noinput && exec gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 2 --threads 2 --timeout 180 --access-logfile -"]
+    depends_on:
+      db:
+        condition: service_healthy
+      vision:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/',timeout=5)"]
+      interval: 10s
+      timeout: 7s
+      retries: 15
+  worker:
+    <<: *backend
+    command: ["python", "manage.py", "run_video_worker"]
+    depends_on:
+      backend:
+        condition: service_healthy
+  gateway:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    env_file: .env.deploy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - static_files:/srv/static:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+volumes:
+  postgres_data:
+  private_media:
+  static_files:
+  vision_data:
+  caddy_data:
+  caddy_config:

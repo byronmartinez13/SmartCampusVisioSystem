@@ -1,0 +1,102 @@
+[
+  {
+    "file": "clase0.mp4",
+    "path": "C:\\Users\\USER\\Downloads\\5to semestre\\Construcción de software\\1er parcial\\SmartCampusVisionV3\\data\\videos\\clase0.mp4",
+    "bytes": 12668500,
+    "opened": true,
+    "fps": 30.0,
+    "frames": 1719,
+    "width": 478,
+    "height": 850,
+    "seconds": 57.3,
+    "samples": [
+      {
+        "frame": 0,
+        "decoded": true
+      },
+      {
+        "frame": 859,
+        "decoded": true
+      },
+      {
+        "frame": 1546,
+        "decoded": true
+      }
+    ]
+  },
+  {
+    "file": "clase1.mp4",
+    "path": "C:\\Users\\USER\\Downloads\\5to semestre\\Construcción de software\\1er parcial\\SmartCampusVisionV3\\data\\videos\\clase1.mp4",
+    "bytes": 998883,
+    "opened": true,
+    "fps": 24.0,
+    "frames": 124,
+    "width": 1536,
+    "height": 672,
+    "seconds": 5.166666666666667,
+    "samples": [
+      {
+        "frame": 0,
+        "decoded": true
+      },
+      {
+        "frame": 61,
+        "decoded": true
+      },
+      {
+        "frame": 110,
+        "decoded": true
+      }
+    ]
+  },
+  {
+    "file": "clase2.mp4",
+    "path": "C:\\Users\\USER\\Downloads\\5to semestre\\Construcción de software\\1er parcial\\SmartCampusVisionV3\\data\\videos\\clase2.mp4",
+    "bytes": 1550432,
+    "opened": true,
+    "fps": 24.0,
+    "frames": 124,
+    "width": 1536,
+    "height": 672,
+    "seconds": 5.166666666666667,
+    "samples": [
+      {
+        "frame": 0,
+        "decoded": true
+      },
+      {
+        "frame": 61,
+        "decoded": true
+      },
+      {
+        "frame": 110,
+        "decoded": true
+      }
+    ]
+  },
+  {
+    "file": "clase3.mp4",
+    "path": "C:\\Users\\USER\\Downloads\\5to semestre\\Construcción de software\\1er parcial\\SmartCampusVisionV3\\data\\videos\\clase3.mp4",
+    "bytes": 5599622,
+    "opened": true,
+    "fps": 24.0,
+    "frames": 124,
+    "width": 2944,
+    "height": 1248,
+    "seconds": 5.166666666666667,
+    "samples": [
+      {
+        "frame": 0,
+        "decoded": true
+      },
+      {
+        "frame": 61,
+        "decoded": true
+      },
+      {
+        "frame": 110,
+        "decoded": true
+      }
+    ]
+  }
+]

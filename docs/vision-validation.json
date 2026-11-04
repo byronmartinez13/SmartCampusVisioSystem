@@ -1,0 +1,1615 @@
+{
+  "note": "Baseline detections; no annotated ground truth; accuracy not validated.",
+  "videos": [
+    {
+      "file": "clase0.mp4",
+      "job_id": "bcb440be-7570-4e01-9371-7dd2c3b8788e",
+      "status": "completed",
+      "schema_version": 1,
+      "video": {
+        "fps": 30.0,
+        "frame_count": 1719,
+        "width": 478,
+        "height": 850,
+        "duration_seconds": 57.3
+      },
+      "detector": {
+        "model": "yolo11n.pt",
+        "sha256": "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1",
+        "person_classes": [
+          "person"
+        ],
+        "seat_classes": [
+          "chair"
+        ],
+        "seat_semantics": "chairs",
+        "device": "cpu",
+        "image_size": 640
+      },
+      "confidence": 0.5,
+      "sample_stride": 15,
+      "sampled_frames": 115,
+      "people_max": 6,
+      "people_mean": 2.18,
+      "seats_max": 2,
+      "peak_sample": {
+        "frame": 405,
+        "seconds": 13.5,
+        "people": 6,
+        "seats": 1,
+        "boxes": [
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.7488,
+            "xyxy": [
+              1.2,
+              606.1,
+              148.0,
+              849.4
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.739,
+            "xyxy": [
+              143.2,
+              208.0,
+              469.9,
+              615.1
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.6326,
+            "xyxy": [
+              384.8,
+              24.9,
+              477.7,
+              161.9
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.6026,
+            "xyxy": [
+              0.6,
+              174.4,
+              73.7,
+              231.2
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.5413,
+            "xyxy": [
+              91.1,
+              113.9,
+              155.4,
+              160.8
+            ]
+          },
+          {
+            "kind": "seat",
+            "class": "chair",
+            "confidence": 0.5381,
+            "xyxy": [
+              363.4,
+              158.4,
+              447.8,
+              258.3
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.5265,
+            "xyxy": [
+              352.1,
+              82.2,
+              433.0,
+              162.5
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "frame": 0,
+          "seconds": 0.0,
+          "people": 5,
+          "seats": 0
+        },
+        {
+          "frame": 15,
+          "seconds": 0.5,
+          "people": 5,
+          "seats": 0
+        },
+        {
+          "frame": 30,
+          "seconds": 1.0,
+          "people": 5,
+          "seats": 0
+        },
+        {
+          "frame": 45,
+          "seconds": 1.5,
+          "people": 4,
+          "seats": 2
+        },
+        {
+          "frame": 60,
+          "seconds": 2.0,
+          "people": 2,
+          "seats": 0
+        },
+        {
+          "frame": 75,
+          "seconds": 2.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 90,
+          "seconds": 3.0,
+          "people": 4,
+          "seats": 0
+        },
+        {
+          "frame": 105,
+          "seconds": 3.5,
+          "people": 4,
+          "seats": 0
+        },
+        {
+          "frame": 120,
+          "seconds": 4.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 135,
+          "seconds": 4.5,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 150,
+          "seconds": 5.0,
+          "people": 2,
+          "seats": 0
+        },
+        {
+          "frame": 165,
+          "seconds": 5.5,
+          "people": 2,
+          "seats": 0
+        },
+        {
+          "frame": 180,
+          "seconds": 6.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 195,
+          "seconds": 6.5,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 210,
+          "seconds": 7.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 225,
+          "seconds": 7.5,
+          "people": 2,
+          "seats": 0
+        },
+        {
+          "frame": 240,
+          "seconds": 8.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 255,
+          "seconds": 8.5,
+          "people": 5,
+          "seats": 1
+        },
+        {
+          "frame": 270,
+          "seconds": 9.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 285,
+          "seconds": 9.5,
+          "people": 5,
+          "seats": 0
+        },
+        {
+          "frame": 300,
+          "seconds": 10.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 315,
+          "seconds": 10.5,
+          "people": 4,
+          "seats": 0
+        },
+        {
+          "frame": 330,
+          "seconds": 11.0,
+          "people": 4,
+          "seats": 0
+        },
+        {
+          "frame": 345,
+          "seconds": 11.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 360,
+          "seconds": 12.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 375,
+          "seconds": 12.5,
+          "people": 2,
+          "seats": 0
+        },
+        {
+          "frame": 390,
+          "seconds": 13.0,
+          "people": 5,
+          "seats": 1
+        },
+        {
+          "frame": 405,
+          "seconds": 13.5,
+          "people": 6,
+          "seats": 1
+        },
+        {
+          "frame": 420,
+          "seconds": 14.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 435,
+          "seconds": 14.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 450,
+          "seconds": 15.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 465,
+          "seconds": 15.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 480,
+          "seconds": 16.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 495,
+          "seconds": 16.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 510,
+          "seconds": 17.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 525,
+          "seconds": 17.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 540,
+          "seconds": 18.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 555,
+          "seconds": 18.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 570,
+          "seconds": 19.0,
+          "people": 2,
+          "seats": 0
+        },
+        {
+          "frame": 585,
+          "seconds": 19.5,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 600,
+          "seconds": 20.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 615,
+          "seconds": 20.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 630,
+          "seconds": 21.0,
+          "people": 6,
+          "seats": 0
+        },
+        {
+          "frame": 645,
+          "seconds": 21.5,
+          "people": 4,
+          "seats": 0
+        },
+        {
+          "frame": 660,
+          "seconds": 22.0,
+          "people": 4,
+          "seats": 0
+        },
+        {
+          "frame": 675,
+          "seconds": 22.5,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 690,
+          "seconds": 23.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 705,
+          "seconds": 23.5,
+          "people": 2,
+          "seats": 0
+        },
+        {
+          "frame": 720,
+          "seconds": 24.0,
+          "people": 2,
+          "seats": 0
+        },
+        {
+          "frame": 735,
+          "seconds": 24.5,
+          "people": 2,
+          "seats": 0
+        },
+        {
+          "frame": 750,
+          "seconds": 25.0,
+          "people": 2,
+          "seats": 0
+        },
+        {
+          "frame": 765,
+          "seconds": 25.5,
+          "people": 2,
+          "seats": 0
+        },
+        {
+          "frame": 780,
+          "seconds": 26.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 795,
+          "seconds": 26.5,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 810,
+          "seconds": 27.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 825,
+          "seconds": 27.5,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 840,
+          "seconds": 28.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 855,
+          "seconds": 28.5,
+          "people": 2,
+          "seats": 0
+        },
+        {
+          "frame": 870,
+          "seconds": 29.0,
+          "people": 3,
+          "seats": 1
+        },
+        {
+          "frame": 885,
+          "seconds": 29.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 900,
+          "seconds": 30.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 915,
+          "seconds": 30.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 930,
+          "seconds": 31.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 945,
+          "seconds": 31.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 960,
+          "seconds": 32.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 975,
+          "seconds": 32.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 990,
+          "seconds": 33.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 1005,
+          "seconds": 33.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 1020,
+          "seconds": 34.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 1035,
+          "seconds": 34.5,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 1050,
+          "seconds": 35.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 1065,
+          "seconds": 35.5,
+          "people": 5,
+          "seats": 0
+        },
+        {
+          "frame": 1080,
+          "seconds": 36.0,
+          "people": 4,
+          "seats": 1
+        },
+        {
+          "frame": 1095,
+          "seconds": 36.5,
+          "people": 4,
+          "seats": 1
+        },
+        {
+          "frame": 1110,
+          "seconds": 37.0,
+          "people": 4,
+          "seats": 0
+        },
+        {
+          "frame": 1125,
+          "seconds": 37.5,
+          "people": 4,
+          "seats": 0
+        },
+        {
+          "frame": 1140,
+          "seconds": 38.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 1155,
+          "seconds": 38.5,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 1170,
+          "seconds": 39.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 1185,
+          "seconds": 39.5,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 1200,
+          "seconds": 40.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 1215,
+          "seconds": 40.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 1230,
+          "seconds": 41.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 1245,
+          "seconds": 41.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 1260,
+          "seconds": 42.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 1275,
+          "seconds": 42.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 1290,
+          "seconds": 43.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 1305,
+          "seconds": 43.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 1320,
+          "seconds": 44.0,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 1335,
+          "seconds": 44.5,
+          "people": 1,
+          "seats": 0
+        },
+        {
+          "frame": 1350,
+          "seconds": 45.0,
+          "people": 4,
+          "seats": 0
+        },
+        {
+          "frame": 1365,
+          "seconds": 45.5,
+          "people": 3,
+          "seats": 1
+        },
+        {
+          "frame": 1380,
+          "seconds": 46.0,
+          "people": 3,
+          "seats": 1
+        },
+        {
+          "frame": 1395,
+          "seconds": 46.5,
+          "people": 5,
+          "seats": 2
+        },
+        {
+          "frame": 1410,
+          "seconds": 47.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 1425,
+          "seconds": 47.5,
+          "people": 2,
+          "seats": 0
+        },
+        {
+          "frame": 1440,
+          "seconds": 48.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 1455,
+          "seconds": 48.5,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 1470,
+          "seconds": 49.0,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 1485,
+          "seconds": 49.5,
+          "people": 3,
+          "seats": 0
+        },
+        {
+          "frame": 1500,
+          "seconds": 50.0,
+          "people": 0,
+          "seats": 0
+        },
+        {
+          "frame": 1515,
+          "seconds": 50.5,
+          "people": 0,
+          "seats": 0
+        },
+        {
+          "frame": 1530,
+          "seconds": 51.0,
+          "people": 0,
+          "seats": 0
+        },
+        {
+          "frame": 1545,
+          "seconds": 51.5,
+          "people": 0,
+          "seats": 0
+        },
+        {
+          "frame": 1560,
+          "seconds": 52.0,
+          "people": 0,
+          "seats": 0
+        },
+        {
+          "frame": 1575,
+          "seconds": 52.5,
+          "people": 0,
+          "seats": 0
+        },
+        {
+          "frame": 1590,
+          "seconds": 53.0,
+          "people": 0,
+          "seats": 0
+        },
+        {
+          "frame": 1605,
+          "seconds": 53.5,
+          "people": 0,
+          "seats": 0
+        },
+        {
+          "frame": 1620,
+          "seconds": 54.0,
+          "people": 0,
+          "seats": 0
+        },
+        {
+          "frame": 1635,
+          "seconds": 54.5,
+          "people": 0,
+          "seats": 0
+        },
+        {
+          "frame": 1650,
+          "seconds": 55.0,
+          "people": 0,
+          "seats": 0
+        },
+        {
+          "frame": 1665,
+          "seconds": 55.5,
+          "people": 0,
+          "seats": 0
+        },
+        {
+          "frame": 1680,
+          "seconds": 56.0,
+          "people": 0,
+          "seats": 0
+        },
+        {
+          "frame": 1695,
+          "seconds": 56.5,
+          "people": 0,
+          "seats": 0
+        },
+        {
+          "frame": 1710,
+          "seconds": 57.0,
+          "people": 0,
+          "seats": 0
+        }
+      ],
+      "processing_seconds": 20.36
+    },
+    {
+      "file": "clase1.mp4",
+      "job_id": "987223ab-e25c-42de-b46c-eb1b302e3e54",
+      "status": "completed",
+      "schema_version": 1,
+      "video": {
+        "fps": 24.0,
+        "frame_count": 124,
+        "width": 1536,
+        "height": 672,
+        "duration_seconds": 5.167
+      },
+      "detector": {
+        "model": "yolo11n.pt",
+        "sha256": "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1",
+        "person_classes": [
+          "person"
+        ],
+        "seat_classes": [
+          "chair"
+        ],
+        "seat_semantics": "chairs",
+        "device": "cpu",
+        "image_size": 640
+      },
+      "confidence": 0.5,
+      "sample_stride": 12,
+      "sampled_frames": 11,
+      "people_max": 11,
+      "people_mean": 7.27,
+      "seats_max": 4,
+      "peak_sample": {
+        "frame": 120,
+        "seconds": 5.0,
+        "people": 11,
+        "seats": 3,
+        "boxes": [
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.8244,
+            "xyxy": [
+              32.6,
+              338.2,
+              328.5,
+              663.3
+            ]
+          },
+          {
+            "kind": "seat",
+            "class": "chair",
+            "confidence": 0.8084,
+            "xyxy": [
+              772.0,
+              316.6,
+              934.8,
+              564.3
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.7897,
+            "xyxy": [
+              154.0,
+              95.6,
+              232.6,
+              330.8
+            ]
+          },
+          {
+            "kind": "seat",
+            "class": "chair",
+            "confidence": 0.7781,
+            "xyxy": [
+              917.2,
+              357.3,
+              1150.7,
+              653.4
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.6958,
+            "xyxy": [
+              276.3,
+              437.3,
+              503.4,
+              670.2
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.6475,
+            "xyxy": [
+              238.2,
+              108.0,
+              307.7,
+              292.3
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.6082,
+            "xyxy": [
+              980.6,
+              255.2,
+              1138.7,
+              449.2
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.5968,
+            "xyxy": [
+              421.9,
+              174.9,
+              571.3,
+              395.3
+            ]
+          },
+          {
+            "kind": "seat",
+            "class": "chair",
+            "confidence": 0.5792,
+            "xyxy": [
+              1205.9,
+              406.1,
+              1438.6,
+              637.2
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.5724,
+            "xyxy": [
+              0.2,
+              235.0,
+              91.2,
+              459.6
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.5448,
+            "xyxy": [
+              815.3,
+              220.0,
+              937.9,
+              421.6
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.5357,
+            "xyxy": [
+              33.0,
+              295.8,
+              157.9,
+              521.2
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.5192,
+            "xyxy": [
+              1337.8,
+              221.1,
+              1467.7,
+              326.6
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.5094,
+            "xyxy": [
+              1225.3,
+              287.7,
+              1521.1,
+              523.9
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "frame": 0,
+          "seconds": 0.0,
+          "people": 5,
+          "seats": 2
+        },
+        {
+          "frame": 12,
+          "seconds": 0.5,
+          "people": 7,
+          "seats": 3
+        },
+        {
+          "frame": 24,
+          "seconds": 1.0,
+          "people": 6,
+          "seats": 4
+        },
+        {
+          "frame": 36,
+          "seconds": 1.5,
+          "people": 7,
+          "seats": 3
+        },
+        {
+          "frame": 48,
+          "seconds": 2.0,
+          "people": 6,
+          "seats": 4
+        },
+        {
+          "frame": 60,
+          "seconds": 2.5,
+          "people": 8,
+          "seats": 4
+        },
+        {
+          "frame": 72,
+          "seconds": 3.0,
+          "people": 8,
+          "seats": 4
+        },
+        {
+          "frame": 84,
+          "seconds": 3.5,
+          "people": 7,
+          "seats": 4
+        },
+        {
+          "frame": 96,
+          "seconds": 4.0,
+          "people": 8,
+          "seats": 4
+        },
+        {
+          "frame": 108,
+          "seconds": 4.5,
+          "people": 7,
+          "seats": 3
+        },
+        {
+          "frame": 120,
+          "seconds": 5.0,
+          "people": 11,
+          "seats": 3
+        }
+      ],
+      "processing_seconds": 1.72
+    },
+    {
+      "file": "clase2.mp4",
+      "job_id": "9417db3c-76bf-4c4b-800b-9a4dd81c776a",
+      "status": "completed",
+      "schema_version": 1,
+      "video": {
+        "fps": 24.0,
+        "frame_count": 124,
+        "width": 1536,
+        "height": 672,
+        "duration_seconds": 5.167
+      },
+      "detector": {
+        "model": "yolo11n.pt",
+        "sha256": "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1",
+        "person_classes": [
+          "person"
+        ],
+        "seat_classes": [
+          "chair"
+        ],
+        "seat_semantics": "chairs",
+        "device": "cpu",
+        "image_size": 640
+      },
+      "confidence": 0.5,
+      "sample_stride": 12,
+      "sampled_frames": 11,
+      "people_max": 13,
+      "people_mean": 10.73,
+      "seats_max": 4,
+      "peak_sample": {
+        "frame": 108,
+        "seconds": 4.5,
+        "people": 13,
+        "seats": 2,
+        "boxes": [
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.9139,
+            "xyxy": [
+              700.3,
+              344.3,
+              1048.6,
+              667.5
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.8624,
+            "xyxy": [
+              129.5,
+              434.0,
+              440.3,
+              672.0
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.8565,
+            "xyxy": [
+              675.3,
+              193.0,
+              779.4,
+              373.6
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.8193,
+            "xyxy": [
+              1188.0,
+              335.5,
+              1528.2,
+              672.0
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.7912,
+            "xyxy": [
+              704.0,
+              57.4,
+              815.6,
+              257.7
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.7845,
+            "xyxy": [
+              503.2,
+              32.7,
+              643.3,
+              286.4
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.7018,
+            "xyxy": [
+              1145.0,
+              180.1,
+              1215.8,
+              252.2
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.6631,
+            "xyxy": [
+              89.2,
+              226.8,
+              172.3,
+              309.1
+            ]
+          },
+          {
+            "kind": "seat",
+            "class": "chair",
+            "confidence": 0.6609,
+            "xyxy": [
+              931.0,
+              412.8,
+              1121.8,
+              638.5
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.6439,
+            "xyxy": [
+              365.8,
+              220.9,
+              475.6,
+              401.6
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.6316,
+            "xyxy": [
+              18.0,
+              327.5,
+              229.0,
+              668.8
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.588,
+            "xyxy": [
+              911.2,
+              250.6,
+              1069.8,
+              436.2
+            ]
+          },
+          {
+            "kind": "seat",
+            "class": "chair",
+            "confidence": 0.564,
+            "xyxy": [
+              504.6,
+              473.5,
+              665.0,
+              668.4
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.5236,
+            "xyxy": [
+              599.6,
+              76.6,
+              719.3,
+              287.6
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.5216,
+            "xyxy": [
+              601.6,
+              76.7,
+              718.3,
+              223.9
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "frame": 0,
+          "seconds": 0.0,
+          "people": 9,
+          "seats": 0
+        },
+        {
+          "frame": 12,
+          "seconds": 0.5,
+          "people": 10,
+          "seats": 1
+        },
+        {
+          "frame": 24,
+          "seconds": 1.0,
+          "people": 9,
+          "seats": 0
+        },
+        {
+          "frame": 36,
+          "seconds": 1.5,
+          "people": 10,
+          "seats": 0
+        },
+        {
+          "frame": 48,
+          "seconds": 2.0,
+          "people": 9,
+          "seats": 2
+        },
+        {
+          "frame": 60,
+          "seconds": 2.5,
+          "people": 11,
+          "seats": 2
+        },
+        {
+          "frame": 72,
+          "seconds": 3.0,
+          "people": 11,
+          "seats": 1
+        },
+        {
+          "frame": 84,
+          "seconds": 3.5,
+          "people": 12,
+          "seats": 4
+        },
+        {
+          "frame": 96,
+          "seconds": 4.0,
+          "people": 11,
+          "seats": 2
+        },
+        {
+          "frame": 108,
+          "seconds": 4.5,
+          "people": 13,
+          "seats": 2
+        },
+        {
+          "frame": 120,
+          "seconds": 5.0,
+          "people": 13,
+          "seats": 1
+        }
+      ],
+      "processing_seconds": 1.67
+    },
+    {
+      "file": "clase3.mp4",
+      "job_id": "b567e8a7-f8e4-4918-a607-c8c101038f29",
+      "status": "completed",
+      "schema_version": 1,
+      "video": {
+        "fps": 24.0,
+        "frame_count": 124,
+        "width": 2944,
+        "height": 1248,
+        "duration_seconds": 5.167
+      },
+      "detector": {
+        "model": "yolo11n.pt",
+        "sha256": "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1",
+        "person_classes": [
+          "person"
+        ],
+        "seat_classes": [
+          "chair"
+        ],
+        "seat_semantics": "chairs",
+        "device": "cpu",
+        "image_size": 640
+      },
+      "confidence": 0.5,
+      "sample_stride": 12,
+      "sampled_frames": 11,
+      "people_max": 12,
+      "people_mean": 9.36,
+      "seats_max": 2,
+      "peak_sample": {
+        "frame": 36,
+        "seconds": 1.5,
+        "people": 12,
+        "seats": 2,
+        "boxes": [
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.8888,
+            "xyxy": [
+              2033.1,
+              805.2,
+              2660.2,
+              1238.7
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.7666,
+            "xyxy": [
+              2630.9,
+              487.5,
+              2804.7,
+              771.2
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.7573,
+            "xyxy": [
+              1551.8,
+              243.8,
+              1690.8,
+              688.1
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.7561,
+            "xyxy": [
+              641.1,
+              678.6,
+              1028.8,
+              1220.3
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.7478,
+            "xyxy": [
+              1277.5,
+              248.9,
+              1416.7,
+              675.5
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.7349,
+            "xyxy": [
+              1412.8,
+              277.2,
+              1538.7,
+              686.5
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.6995,
+            "xyxy": [
+              913.6,
+              547.3,
+              1209.3,
+              978.8
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.6699,
+            "xyxy": [
+              2890.5,
+              582.2,
+              2942.8,
+              694.9
+            ]
+          },
+          {
+            "kind": "seat",
+            "class": "chair",
+            "confidence": 0.6685,
+            "xyxy": [
+              1090.7,
+              751.8,
+              1334.6,
+              1241.6
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.6629,
+            "xyxy": [
+              15.5,
+              566.6,
+              238.4,
+              873.9
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.5954,
+            "xyxy": [
+              1689.3,
+              456.8,
+              1846.9,
+              805.9
+            ]
+          },
+          {
+            "kind": "seat",
+            "class": "chair",
+            "confidence": 0.5339,
+            "xyxy": [
+              810.5,
+              868.5,
+              1148.0,
+              1244.1
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.5088,
+            "xyxy": [
+              1693.3,
+              276.1,
+              1822.0,
+              630.9
+            ]
+          },
+          {
+            "kind": "person",
+            "class": "person",
+            "confidence": 0.5083,
+            "xyxy": [
+              1124.7,
+              418.1,
+              1343.9,
+              971.6
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "frame": 0,
+          "seconds": 0.0,
+          "people": 10,
+          "seats": 0
+        },
+        {
+          "frame": 12,
+          "seconds": 0.5,
+          "people": 11,
+          "seats": 0
+        },
+        {
+          "frame": 24,
+          "seconds": 1.0,
+          "people": 9,
+          "seats": 1
+        },
+        {
+          "frame": 36,
+          "seconds": 1.5,
+          "people": 12,
+          "seats": 2
+        },
+        {
+          "frame": 48,
+          "seconds": 2.0,
+          "people": 10,
+          "seats": 1
+        },
+        {
+          "frame": 60,
+          "seconds": 2.5,
+          "people": 11,
+          "seats": 1
+        },
+        {
+          "frame": 72,
+          "seconds": 3.0,
+          "people": 9,
+          "seats": 2
+        },
+        {
+          "frame": 84,
+          "seconds": 3.5,
+          "people": 10,
+          "seats": 1
+        },
+        {
+          "frame": 96,
+          "seconds": 4.0,
+          "people": 5,
+          "seats": 2
+        },
+        {
+          "frame": 108,
+          "seconds": 4.5,
+          "people": 8,
+          "seats": 1
+        },
+        {
+          "frame": 120,
+          "seconds": 5.0,
+          "people": 8,
+          "seats": 1
+        }
+      ],
+      "processing_seconds": 3.72
+    }
+  ]
+}

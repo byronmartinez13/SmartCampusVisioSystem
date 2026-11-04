@@ -1,0 +1,25 @@
+{$SITE_ADDRESS} {
+    encode zstd gzip
+    request_body {
+        max_size 260MB
+    }
+    header {
+        X-Content-Type-Options nosniff
+        Referrer-Policy same-origin
+        Permissions-Policy "camera=(self), microphone=()"
+        Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; media-src 'self' blob:; connect-src 'self'; font-src 'self'; frame-ancestors 'none'"
+    }
+    @backend path /api/* /admin /admin/* /health/
+    handle @backend {
+        reverse_proxy backend:8000
+    }
+    handle_path /static/* {
+        root * /srv/static
+        file_server
+    }
+    handle {
+        root * /srv/frontend
+        try_files {path} /index.html
+        file_server
+    }
+}

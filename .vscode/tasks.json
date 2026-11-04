@@ -1,0 +1,47 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Backend: Django",
+      "type": "process",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": ["backend/manage.py", "runserver", "127.0.0.1:8000"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": [],
+      "presentation": { "panel": "dedicated", "reveal": "always" }
+    },
+    {
+      "label": "Frontend: React",
+      "type": "shell",
+      "command": "npm.cmd",
+      "args": ["run", "dev"],
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "problemMatcher": [],
+      "presentation": { "panel": "dedicated", "reveal": "always" }
+    },
+    {
+      "label": "Vision: YOLO",
+      "type": "process",
+      "command": "${workspaceFolder}/services/vision/.venv/Scripts/python.exe",
+      "args": ["-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8002"],
+      "options": { "cwd": "${workspaceFolder}/services/vision" },
+      "problemMatcher": [],
+      "presentation": { "panel": "dedicated", "reveal": "always" }
+    },
+    {
+      "label": "Backend: cola de videos",
+      "type": "process",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": ["backend/manage.py", "run_video_worker"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": [],
+      "presentation": { "panel": "dedicated", "reveal": "always" }
+    },
+    {
+      "label": "Iniciar Smart Campus Vision",
+      "dependsOn": ["Backend: Django", "Frontend: React", "Vision: YOLO", "Backend: cola de videos"],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    }
+  ]
+}
