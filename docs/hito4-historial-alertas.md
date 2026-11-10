@@ -27,3 +27,8 @@ Las alertas se crean cuando se guarda el resumen de un análisis que supera la c
 ## Pendientes de otras etapas
 
 Reportes PDF, análisis en vivo, asignación y horarios, entrenamiento/evaluación final del modelo y AWS. El historial ofrece JSON; no presenta un botón PDF que no funcione. La disponibilidad mostrada es una estimación histórica, no puestos específicos libres ni información en tiempo real. PostgreSQL y despliegue aún requieren validación.
+# Eliminación de análisis
+
+Los administradores pueden eliminar definitivamente un análisis terminado desde Reportes, Historial o el detalle. La confirmación explica que se retiran el análisis, el archivo cargado, la copia del servicio de visión, la vista previa, el resumen y las alertas asociadas. No se permite eliminar mientras esté en cola, procesando o cancelándose. Al quitar el resumen también se actualizan dashboard y actividad del aula. Los PDF y videos ya descargados en otros equipos no se borran. Se conserva únicamente un evento administrativo de eliminación, sin copiar los resultados ni el video.
+
+Si el servicio de visión no responde o aún procesa el video, el registro se conserva y se muestra un error para reintentar. No se añade borrado masivo ni se ejecuta limpieza automática sobre datos existentes.

@@ -29,12 +29,16 @@ function formatError(value: unknown): string {
   return 'No se pudo completar la solicitud.';
 }
 
-export async function api<T>(path: string, method = 'GET', data?: unknown): Promise<T> {
+export async function api<T>(path: string, method = 'GET', data?: unknown, csrfToken?: string): Promise<T> {
   const headers: Record<string, string> = data instanceof FormData ? {} : { 'Content-Type': 'application/json' };
   if (method !== 'GET') {
-    const csrf = await fetch('/api/auth/csrf/', { credentials: 'same-origin', cache: 'no-store' });
-    if (!csrf.ok) throw new ApiError('No se pudo establecer una conexión segura. Inténtalo de nuevo.', csrf.status);
-    headers['X-CSRFToken'] = (await csrf.json()).csrfToken;
+    if (csrfToken) {
+      headers['X-CSRFToken'] = csrfToken;
+    } else {
+      const csrf = await fetch('/api/auth/csrf/', { credentials: 'same-origin', cache: 'no-store' });
+      if (!csrf.ok) throw new ApiError('No se pudo establecer una conexión segura. Inténtalo de nuevo.', csrf.status);
+      headers['X-CSRFToken'] = (await csrf.json()).csrfToken;
+    }
   }
   let response: Response;
   try {

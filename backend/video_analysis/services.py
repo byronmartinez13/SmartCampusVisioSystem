@@ -3,11 +3,47 @@ import httpx
 from django.db import transaction
 from django.utils import timezone
 from campus.models import Analysis, Alert
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError, APIException
 from .models import VideoJob
 
 logger = logging.getLogger(__name__)
 ACTIVE = ("queued", "processing", "cancelling")
+
+
+@transaction.atomic
+def delete_analysis(job_id, actor):
+    from django.shortcuts import get_object_or_404
+    from django.core.cache import cache
+    from campus.models import AdministrativeEvent
+    from .client import VisionClient
+    job = get_object_or_404(VideoJob.objects.select_for_update(), pk=job_id)
+    if job.status in ACTIVE:
+        raise ValidationError('Detén o cancela el análisis y espera a que finalice antes de eliminarlo.')
+    if job.source == 'video':
+        client = VisionClient()
+        try:
+            client.delete(job)
+        except httpx.HTTPStatusError as exc:
+            if exc.response.status_code == 409:
+                raise ValidationError('El servicio todavía está procesando o cancelando el video. Espera e intenta de nuevo.') from exc
+            raise APIException('No se pudieron eliminar los archivos del servicio de visión. Intenta de nuevo.') from exc
+        except httpx.HTTPError as exc:
+            raise APIException('No se pudo contactar al servicio de visión. El registro se conserva para reintentar.') from exc
+        finally:
+            client.close()
+    # Remove only this job's owned upload; the vision service owns its copy.
+    if job.video.name:
+        job.video.storage.delete(job.video.name)
+    analysis_id = job.saved_analysis_id
+    AdministrativeEvent.objects.create(actor=actor, action='analysis.deleted', target=str(job.pk),
+                                       before={'source': job.source, 'classroom_id': job.classroom_id}, after={})
+    if analysis_id:
+        Alert.objects.filter(analysis_id=analysis_id).delete()
+    ident = job.pk
+    job.delete()
+    if analysis_id:
+        Analysis.objects.filter(pk=analysis_id).delete()
+    cache.delete_many([f'live-monitor:{ident}:{key}' for key in ('offer', 'answer', 'latest')])
 
 
 def synchronize(job, client):

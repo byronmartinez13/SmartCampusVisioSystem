@@ -35,6 +35,10 @@ class VisionClient:
         if response.status_code != 404:
             response.raise_for_status()
 
+    def delete(self, job):
+        response = self.http.delete(f'/v1/jobs/{job.remote_id}', timeout=20)
+        response.raise_for_status()
+
     def preview(self, job):
         response = self.http.get(f"/v1/jobs/{job.remote_id}/preview", timeout=10)
         response.raise_for_status()

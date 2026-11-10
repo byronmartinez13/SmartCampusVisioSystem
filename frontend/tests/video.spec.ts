@@ -45,4 +45,16 @@ test('video: cargar, procesar con YOLO real, recargar, guardar y descargar resul
   await page.evaluate(() => window.scrollTo(0, 0));
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.screenshot({ path: '../tmp/video-result-mobile.png', fullPage: true });
+  const jobId = new URL(page.url()).pathname.split('/').pop();
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/reportes');
+  const row = page.getByRole('row').filter({ hasText: room.name });
+  await expect(row).toBeVisible();
+  page.once('dialog', dialog => void dialog.dismiss());
+  await row.getByRole('button', { name: 'Eliminar análisis', exact: true }).click();
+  await expect(row).toBeVisible();
+  page.once('dialog', dialog => void dialog.accept());
+  await row.getByRole('button', { name: 'Eliminar análisis', exact: true }).click();
+  await expect(row).toHaveCount(0, { timeout: 30000 });
+  expect((await page.request.get(`/api/video-analyses/${jobId}/`)).status()).toBe(404);
 });

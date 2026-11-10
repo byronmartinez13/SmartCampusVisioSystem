@@ -1,5 +1,6 @@
 import json
 import sqlite3
+import shutil
 from contextlib import contextmanager
 from . import settings
 
@@ -40,6 +41,24 @@ def get(job_id):
     value = dict(row)
     value["result"] = json.loads(value["result"]) if value["result"] else None
     return value
+
+
+def delete(job_id):
+    """Delete only terminal jobs; keep the row on file errors so deletion can retry."""
+    from uuid import UUID
+    job_id = str(UUID(str(job_id)))
+    with connection() as conn:
+        conn.execute('BEGIN IMMEDIATE')
+        row = conn.execute('SELECT status FROM jobs WHERE id=?', (job_id,)).fetchone()
+        if row and row['status'] not in ('completed', 'failed', 'cancelled'):
+            raise ValueError('Espera a que el análisis termine de procesarse o cancelarse.')
+        base = settings.DATA_DIR.resolve()
+        directory = base / job_id
+        if directory.is_symlink() or directory.resolve() != directory:
+            raise ValueError('La carpeta del análisis no es válida para eliminar.')
+        if directory.exists():
+            shutil.rmtree(directory)
+        conn.execute('DELETE FROM jobs WHERE id=?', (job_id,))
 
 
 def insert(job_id, confidence):

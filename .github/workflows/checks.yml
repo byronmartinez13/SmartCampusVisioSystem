@@ -3,9 +3,31 @@ on: [push, pull_request]
 jobs:
   backend:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        database: [sqlite, postgresql]
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: smartcampus
+          POSTGRES_USER: smartcampus
+          POSTGRES_PASSWORD: ci-only-postgres-password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U smartcampus -d smartcampus"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 15
     env:
       DJANGO_DEBUG: "true"
-      DATABASE_ENGINE: sqlite
+      DATABASE_ENGINE: ${{ matrix.database }}
+      POSTGRES_DB: smartcampus
+      POSTGRES_USER: smartcampus
+      POSTGRES_PASSWORD: ci-only-postgres-password
+      POSTGRES_HOST: 127.0.0.1
+      POSTGRES_PORT: "5432"
       DJANGO_SECRET_KEY: ci-only-key-not-for-deployment-long-enough-for-tests
     steps:
       - uses: actions/checkout@v4

@@ -18,7 +18,7 @@ Proyecto académico de gestión universitaria desarrollado con **Django y Django
 
 Permite gestionar **aulas y laboratorios**, analizar su ocupación mediante videos o una cámara local, registrar capacidades validadas y recomendar asignaciones compatibles con los cursos, horarios y recursos disponibles. Incluye autenticación, roles, alertas, historial, decisiones auditadas y reportes PDF.
 
-Los **hitos 1 a 8 están implementados**. La evaluación de precisión, la verificación con PostgreSQL y el despliegue real en AWS siguen pendientes. El proyecto todavía no está listo para producción; consulta el [estado verificable y la entrega al grupo](docs/estado-y-entrega.md).
+Los **hitos 1 a 8 están implementados**. La aplicación está desplegada en AWS Lightsail con HTTPS y PostgreSQL 17. Se realizó una comparación inicial de modelos sobre siete imágenes de prueba y se conserva YOLO11n preentrenado. Esto no certifica precisión general ni preparación para producción; consulta el [estado verificable y la entrega al grupo](docs/estado-y-entrega.md).
 
 ---
 
@@ -50,7 +50,7 @@ Los **hitos 1 a 8 están implementados**. La evaluación de precisión, la verif
 | ReportLab | Reportes PDF |
 | Playwright | Pruebas de navegador |
 | Docker Compose | Configuración de servicios y despliegue |
-| AWS | Destino requerido; despliegue real pendiente |
+| AWS Lightsail | Despliegue de demostración con HTTPS y almacenamiento persistente |
 
 ---
 
@@ -252,7 +252,7 @@ La configuración predeterminada utiliza PostgreSQL. Si tienes Docker:
 3. Ejecuta `docker compose up -d db` desde la raíz.
 4. Aplica las migraciones y ejecuta las pruebas antes de iniciar la aplicación.
 
-También puedes usar un servidor PostgreSQL existente. Cambiar de base no copia automáticamente las cuentas de SQLite. La ejecución local documentada se verificó con SQLite; PostgreSQL sigue pendiente de verificación.
+También puedes usar un servidor PostgreSQL existente. Cambiar de base no copia automáticamente las cuentas de SQLite. La ejecución local usa SQLite; el despliegue AWS utiliza PostgreSQL 17, con migraciones y pruebas verificadas.
 
 ## Recuperación de contraseña
 
@@ -295,9 +295,11 @@ La evidencia de verificaciones anteriores está en [Estado y entrega](docs/estad
 
 # ☁️ Estado y Despliegue
 
-La entrega requiere evaluar conteos con datos anotados, medir rendimiento en el equipo de presentación, verificar PostgreSQL y la pila Linux, configurar SMTP y desplegar en AWS.
+Para una demostración temporal con presupuesto total de US$25, consulta el [plan de presentación en AWS](docs/presentacion-25-usd.md), con arquitectura, costos orientativos y pasos de validación.
 
-Antes de producción también deben validarse HTTPS, almacenamiento de videos, escalado de inferencia, caché compartida para límites de solicitudes, observabilidad, backups y restauración. Los límites actuales usan la caché local de Django para desarrollo de un proceso.
+El despliegue Linux en AWS ya se construyó y verificó con PostgreSQL y HTTPS. Se añadieron selección de cámara trasera, monitor entre dispositivos en la misma red, eliminación definitiva de análisis por administrador y un ciclo de captura sin la pausa fija de un segundo. El teléfono puede utilizarse como webcam de Windows mediante iVCam, cuyo funcionamiento fue confirmado por el usuario.
+
+Antes de producción quedan por ampliar la evaluación de precisión y carga, SMTP externo, observabilidad y respaldo/restauración de base y archivos. PostgreSQL y los medios usan volúmenes persistentes; la caché en despliegue es compartida sobre PostgreSQL. El desarrollo utiliza caché local. La instalación es de un solo servidor y no ofrece alta disponibilidad.
 
 Los números, usuarios, fechas y detecciones de `docs/referencias/` son ejemplos del prototipo visual y no constituyen resultados reales.
 
@@ -324,8 +326,6 @@ Los números, usuarios, fechas y detecciones de `docs/referencias/` son ejemplos
 ---
 
 # 🤖 Uso de Inteligencia Artificial
-
-Para adaptar este `README` se utilizó **Codex (OpenAI)** como apoyo para revisar la estructura del repositorio, contrastar tecnologías y modelos, y organizar la documentación siguiendo el estilo del README de referencia.
 
 La inteligencia artificial integrada en la aplicación corresponde al detector **YOLO**, utilizado junto con **OpenCV** para procesar imágenes y videos.
 

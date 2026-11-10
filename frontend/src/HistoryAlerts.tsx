@@ -4,6 +4,7 @@ import { AlertTriangle } from 'lucide-react';
 import { api, downloadPdf } from './api';
 import { Message } from './components';
 import { ReportOverview } from './ReportOverview';
+import { DeleteAnalysisButton } from './DeleteAnalysisButton';
 import { dateLabel, errorText, PageHeader, ReadOnlyNotice, ResourceState, useCanManage, useResource } from './campus/shared';
 import type { Classroom, Course } from './campus/types';
 
@@ -19,6 +20,8 @@ function Pagination({ data, page, move }: { data: Page<unknown>; page: number; m
 }
 
 export function History({ reports = false }: { reports?: boolean }) {
+  const manage = useCanManage();
+  const [revision, setRevision] = useState(0);
   const [params, setParams] = useSearchParams();
   const resource = useResource<Page<Job>>(`/analysis-history/?${params}`);
   const rooms = useResource<Classroom[]>('/classrooms/');
@@ -62,11 +65,11 @@ export function History({ reports = false }: { reports?: boolean }) {
     <p className="small-muted">El PDF consolidado incluye solo análisis completados de todas las páginas, hasta 500 registros. Aplica los filtros antes de descargar.</p>
     <button className="button secondary" disabled={!!downloading || resource.loading || !!resource.error} onClick={() => void pdf()}>{downloading === 'report' ? 'Generando PDF…' : 'Descargar reporte consolidado PDF'}</button>
     <Message text={error} /><ResourceState {...resource} />
-    {reports && <ReportOverview params={params.toString()} />}
+    {reports && <ReportOverview key={revision} params={params.toString()} />}
     {resource.data && <section className="panel history-results"><h2>Resultados</h2>
       {resource.data.results.length === 0 ? <p className="inline-empty">No hay análisis que coincidan con los filtros.</p> : <div className="table-wrap"><table><thead><tr><th>Fecha / video</th><th>Aula / actividad</th><th>Estado</th><th>Disponibilidad estimada</th><th>Acciones</th></tr></thead><tbody>{resource.data.results.map(job => {
         const available = job.status === 'completed' && job.result && job.capacity_snapshot !== null ? Math.max(0, job.capacity_snapshot - job.result.people_max) : null;
-        return <tr key={job.id}><td>{dateLabel(job.created_at)}<small>{job.original_name}</small></td><td>{job.classroom_name}<small>{activities[job.activity]} · {job.source === 'camera' ? 'Cámara' : 'Video'}</small></td><td>{states[job.status]}<small>{job.saved_analysis ? 'Resumen guardado' : 'Sin guardar resumen'}</small></td><td>{available === null ? 'No disponible' : `${available} puestos`}{job.result && job.capacity_snapshot !== null && job.result.people_max > job.capacity_snapshot && <small>Sobreocupación estimada</small>}</td><td><div className="table-actions">{job.status === 'completed' && <button className="button secondary small" disabled={!!downloading} onClick={() => void pdf(job.id)}>Descargar PDF</button>}<Link className="button secondary small" to={`/analisis/${job.id}`}>Ver análisis</Link><button className="button secondary small" disabled={downloading === job.id} onClick={() => void download(job.id)}>Descargar JSON</button></div></td></tr>;
+        return <tr key={job.id}><td>{dateLabel(job.created_at)}<small>{job.original_name}</small></td><td>{job.classroom_name}<small>{activities[job.activity]} · {job.source === 'camera' ? 'Cámara' : 'Video'}</small></td><td>{states[job.status]}<small>{job.saved_analysis ? 'Resumen guardado' : 'Sin guardar resumen'}</small></td><td>{available === null ? 'No disponible' : `${available} puestos`}{job.result && job.capacity_snapshot !== null && job.result.people_max > job.capacity_snapshot && <small>Sobreocupación estimada</small>}</td><td><div className="table-actions">{job.status === 'completed' && <button className="button secondary small" disabled={!!downloading} onClick={() => void pdf(job.id)}>Descargar PDF</button>}<Link className="button secondary small" to={`/analisis/${job.id}`}>Ver análisis</Link><button className="button secondary small" disabled={downloading === job.id} onClick={() => void download(job.id)}>Descargar JSON</button>{manage && !['queued', 'processing', 'cancelling'].includes(job.status) && <DeleteAnalysisButton id={job.id} name={job.original_name} onError={setError} onDeleted={() => { resource.reload(); setRevision(n => n + 1); }} />}</div></td></tr>;
       })}</tbody></table></div>}
       <Pagination data={resource.data} page={page} move={p => { const next = new URLSearchParams(params); next.set('page', String(p)); setParams(next); }} />
       <p className="small-muted">Disponibilidad estimada: capacidad validada al cargar menos el máximo de personas detectadas, con mínimo cero. No identifica puestos libres concretos ni representa disponibilidad en tiempo real.</p>

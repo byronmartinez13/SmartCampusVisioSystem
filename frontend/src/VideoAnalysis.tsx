@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ArrowRight, Camera, CheckCircle2, Download, Film, UploadCloud } from 'lucide-react';
 import { api, downloadPdf } from './api';
 import { Message } from './components';
+import { DeleteAnalysisButton } from './DeleteAnalysisButton';
 import { dateLabel, errorText, PageHeader, ReadOnlyNotice, ResourceState, useCanManage, useResource } from './campus/shared';
 import type { Classroom, Course } from './campus/types';
 import type { Preferences } from './Administration';
@@ -110,6 +111,7 @@ export function VideoUpload() {
 
 export function VideoResult() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [job, setJob] = useState<Job | null>(null);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -154,6 +156,7 @@ export function VideoResult() {
     <div className="page-body"><Message text={error} />{error && <button className="button secondary" onClick={() => setRevision(r => r + 1)}>Reintentar consulta</button>}
       {!job && !error && <p role="status">Cargando…</p>}
       {job && <>
+        {manage && !active(job) && <div className="analysis-actions"><DeleteAnalysisButton id={job.id} name={job.original_name} onError={setError} onDeleted={() => navigate('/reportes')} /></div>}
         <section className="panel analysis-progress"><div className="section-heading"><h2>{states[job.status]}</h2><strong>{job.progress}%</strong></div><progress max={100} value={job.progress} aria-label="Progreso del análisis" />
           {active(job) && <p role="status">{job.status === 'queued' ? 'Esperando al servicio de visión.' : job.status === 'cancelling' ? 'Esperando confirmación de cancelación.' : 'Evaluando fotogramas. Puedes volver a esta página más tarde.'}</p>}
           <Message text={job.error} />

@@ -1,5 +1,6 @@
 """Browser camera sessions: inference server-side, frames never persisted."""
 import httpx
+from django.core.cache import cache
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework import serializers, viewsets
@@ -19,11 +20,44 @@ class Start(serializers.Serializer):
     course = serializers.PrimaryKeyRelatedField(queryset=Course.objects.filter(active=True), required=False, allow_null=True)
 
 
+class Signal(serializers.Serializer):
+    kind = serializers.ChoiceField(choices=['offer', 'answer'])
+    viewer = serializers.UUIDField()
+    sdp = serializers.CharField(max_length=65536, trim_whitespace=False)
+
+
 class LiveViewSet(viewsets.ViewSet):
     permission_classes = [IsAdministrator]
 
     def session(self, request, pk):
         return get_object_or_404(VideoJob, pk=pk, source='camera', creator=request.user)
+
+    @action(detail=True, methods=['get', 'post'])
+    def monitor(self, request, pk=None):
+        job = self.session(request, pk)
+        expired = (timezone.now() - job.created_at).total_seconds() > 600
+        prefix = f'live-monitor:{job.pk}:'
+        if request.method == 'POST':
+            if job.status != 'processing' or expired:
+                raise serializers.ValidationError('La sesión ya no está activa.')
+            data = Signal(data=request.data)
+            data.is_valid(raise_exception=True)
+            value = data.validated_data
+            message = {'viewer': str(value['viewer']), 'sdp': value['sdp']}
+            if value['kind'] == 'answer':
+                offer = cache.get(prefix + 'offer')
+                if not offer or offer['viewer'] != message['viewer']:
+                    return Response({'detail': 'El monitor cambió. Vuelve a conectar.'}, status=409)
+            cache.set(prefix + value['kind'], message, timeout=660)
+            return Response({'status': 'ok'}, headers={'Cache-Control': 'no-store'})
+        live = job.status == 'processing' and not expired
+        return Response({
+            'status': job.status if not expired else 'expired',
+            'capacity': job.capacity_snapshot,
+            'offer': cache.get(prefix + 'offer') if live else None,
+            'answer': cache.get(prefix + 'answer') if live else None,
+            'latest': cache.get(prefix + 'latest') if live else None,
+        }, headers={'Cache-Control': 'no-store'})
 
     def create(self, request):
         data = Start(data=request.data)
@@ -70,7 +104,11 @@ class LiveViewSet(viewsets.ViewSet):
         changed = VideoJob.objects.filter(pk=job.pk, status='processing', updated_at=job.updated_at).update(result=result, updated_at=timezone.now())
         if not changed:
             return Response({'detail': 'La sesión cambió durante la detección.'}, status=409)
-        return Response({**detected, 'samples': len(samples), 'people_max': result['people_max']}, headers={'Cache-Control': 'no-store'})
+        latest = {**detected, 'samples': len(samples), 'people_max': result['people_max'],
+                  'received_at': timezone.now().isoformat()}
+        # Only signaling and counts are cached; video travels peer-to-peer.
+        cache.set(f'live-monitor:{job.pk}:latest', latest, timeout=20)
+        return Response(latest, headers={'Cache-Control': 'no-store'})
 
     @action(detail=True, methods=['post'])
     def stop(self, request, pk=None):
@@ -85,4 +123,6 @@ class LiveViewSet(viewsets.ViewSet):
         if job.status == 'completed' and job.options.get('auto_save'):
             from .services import save_summary
             job = save_summary(job.pk)
+        if job.status != 'processing':
+            cache.delete_many([f'live-monitor:{job.pk}:{key}' for key in ('offer', 'answer', 'latest')])
         return Response(JobSerializer(job).data)

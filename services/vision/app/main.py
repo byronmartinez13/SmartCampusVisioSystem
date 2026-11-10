@@ -155,6 +155,17 @@ def get_job(job_id: UUID):
     return job
 
 
+@app.delete('/v1/jobs/{job_id}', status_code=204, dependencies=[Security(authenticate)])
+def delete_job(job_id: UUID):
+    from fastapi import Response
+    with upload_lock:
+        try:
+            store.delete(str(job_id))
+        except ValueError as exc:
+            raise HTTPException(409, str(exc)) from exc
+    return Response(status_code=204)
+
+
 @app.post("/v1/jobs/{job_id}/cancel", dependencies=[Security(authenticate)])
 def cancel_job(job_id: UUID):
     job = store.get(str(job_id))

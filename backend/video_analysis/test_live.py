@@ -67,6 +67,34 @@ class LiveTests(TestCase):
         VideoJob.objects.filter(pk=ident).update(created_at=timezone.now() - timedelta(minutes=11))
         self.assertEqual(self.frame(ident).status_code, 400)
 
+    def test_monitor_signaling_is_private_validated_and_stops_with_session(self):
+        from uuid import uuid4
+        ident = self.start()
+        url = f'/api/live-sessions/{ident}/monitor/'
+        viewer = str(uuid4())
+        offer = {'kind': 'offer', 'viewer': viewer, 'sdp': 'v=0\r\ns=test-offer\r\n'}
+        self.assertEqual(self.client.post(url, offer, format='json').status_code, 200)
+        self.assertEqual(self.client.get(url).data['offer']['viewer'], viewer)
+        self.assertEqual(self.client.get(url).data['offer']['sdp'], offer['sdp'])
+        wrong = {'kind': 'answer', 'viewer': str(uuid4()), 'sdp': 'test-answer'}
+        self.assertEqual(self.client.post(url, wrong, format='json').status_code, 409)
+        wrong['viewer'] = viewer
+        self.assertEqual(self.client.post(url, wrong, format='json').status_code, 200)
+        self.assertEqual(self.client.get(url).data['answer']['sdp'], 'test-answer')
+        self.assertEqual(self.client.get(url)['Cache-Control'], 'no-store')
+        self.client.force_authenticate(self.other)
+        self.assertEqual(self.client.get(url).status_code, 404)
+        self.assertEqual(self.client.post(url, offer, format='json').status_code, 404)
+        self.client.force_authenticate(self.viewer)
+        self.assertEqual(self.client.get(url).status_code, 403)
+        self.client.force_authenticate(self.admin)
+        offer['sdp'] = 'x' * 65537
+        self.assertEqual(self.client.post(url, offer, format='json').status_code, 400)
+        self.client.post(f'/api/live-sessions/{ident}/stop/')
+        self.assertIsNone(self.client.get(url).data['offer'])
+        offer['sdp'] = 'offer'
+        self.assertEqual(self.client.post(url, offer, format='json').status_code, 400)
+
     @patch('video_analysis.live.VisionClient')
     def test_in_flight_sample_cannot_reopen_stopped_session(self, client):
         ident = self.start()

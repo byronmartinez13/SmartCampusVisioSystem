@@ -1,6 +1,6 @@
 # Preparación de despliegue en AWS
 
-Estado: archivos preparados; **no se ha construido ni ejecutado la pila Docker en Linux ni desplegado en AWS**. Este equipo no tiene Docker ni AWS CLI disponibles. Ningún recurso, cuenta, dominio o gasto se ha creado.
+Estado al 10 de noviembre de 2026: **pila Docker construida y desplegada en AWS Lightsail**, Ubuntu 24.04 x86-64, 8 GB RAM y 2 vCPU. PostgreSQL 17, backend y visión reportan salud correcta; HTTPS y acceso público fueron verificados. El usuario confirmó login y uso de iVCam. El servidor es temporal y consume recursos/créditos de AWS; no confundir el plan gratuito de la cuenta con una instancia sin consumo. Ver [plan de presentación](presentacion-25-usd.md). Este equipo local no dispone de Docker: la construcción Linux se realizó por SSH en AWS.
 
 ## Arquitectura incluida
 
@@ -45,11 +45,10 @@ EBS permite respaldar volúmenes mediante snapshots; coordinar la consistencia d
 
 No usar `docker compose down -v` para detener la aplicación: borra volúmenes. `docker compose -f compose.deploy.yaml stop` conserva los datos.
 
-## Condiciones pendientes para acreditar el despliegue
+## Condiciones pendientes para producción
 
-- Construcción de imágenes y compatibilidad de dependencias fijadas con Linux.
-- Migraciones y pruebas sobre PostgreSQL real, incluidas decisiones concurrentes.
-- HTTPS, cámara, SMTP y restauración de backup en el servidor elegido.
+- Construcción Linux, migraciones PostgreSQL, `check --deploy` y salud HTTPS verificados. Ampliar las pruebas de carga y de decisiones concurrentes en el servidor real.
+- Ensayo completo con cámara física, red y equipo de presentación; SMTP externo y restauración de backup pendientes.
 - Medición de memoria, latencia y capacidad bajo carga. Dos detectores CPU (video/cámara) pueden competir por recursos.
 - Política institucional de conservación y eliminación de archivos. La aplicación no borra videos automáticamente.
 - Si se necesita continuidad de servicio, diseñar aparte RDS/almacenamiento externo, observabilidad y una cola apta para varios trabajadores. La pila incluida no acredita esas propiedades.

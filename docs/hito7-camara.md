@@ -4,9 +4,19 @@ Una cámara integrada o USB accesible al navegador. Entrada en Análisis > Abrir
 
 ## Flujo
 
+### Teléfono como cámara y laptop como monitor
+
+La cámara preferida es la trasera (`environment`); se puede elegir frontal/webcam antes de iniciar. Es una preferencia del navegador, sujeta a disponibilidad. Para cambiarla, detener la sesión actual e iniciar otra.
+
+Con la sesión activa, el teléfono muestra **Ver video y conteos en la laptop** y permite copiar su enlace. Abrirlo en la laptop con la misma cuenta administradora que creó la sesión, manteniendo el teléfono abierto y desbloqueado. La laptop recibe video continuo por WebRTC y conteos de muestras mediante la API autenticada. El video no tiene cajas superpuestas en el monitor: las cajas permanecen en la última muestra analizada del teléfono, para no mezclar una detección anterior con un fotograma distinto. Cerrar el monitor libera su conexión sin detener la captura; **Reconectar** permite recuperarla. Detener desde el teléfono finaliza la sesión.
+
+Un monitor a la vez. La implementación usa conexión directa sin servidores STUN/TURN: probar en el mismo Wi-Fi y evitar redes de invitados con aislamiento entre dispositivos. No garantiza conexión entre redes distintas. No transmite audio ni guarda video en el servidor. La caché compartida guarda temporalmente la negociación y los conteos, con acceso exclusivo al propietario, caducidad y limpieza al detener. En producción requiere la caché compartida ya configurada, no una caché local distinta por worker.
+
+Verificación: compilación frontend, cinco pruebas backend de cámara (incluida privacidad de señalización) y recorridos Chromium con video real de cámara sintética, reconexión y cierre independiente. Falta ensayar en el teléfono y Wi-Fi físicos de presentación.
+
 Seleccionar aula, actividad y umbral; iniciar cámara; consultar video local y última muestra anotada; detener; abrir resultado y guardar resumen. El resumen usa el máximo de personas y crea una alerta si supera la capacidad validada al iniciar. El historial distingue cámara de video y permite filtrar el origen; PDF y JSON usan el resultado persistido.
 
-Se envía un JPEG por solicitud al backend y luego al microservicio con clave interna. Los conteos provienen del detector del servidor. No se aceptan conteos calculados por el cliente. El navegador espera cada respuesta y un segundo antes de la siguiente captura: no se garantiza una frecuencia fija ni video continuo anotado.
+Se envía un JPEG por solicitud al backend y luego al microservicio con clave interna. Los conteos provienen del detector del servidor. No se aceptan conteos calculados por el cliente. El navegador espera cada respuesta antes de la siguiente captura y apunta a un ciclo mínimo de 200 ms (hasta 5 muestras/s). No acumula solicitudes ni fotogramas atrasados. La sesión reutiliza su token CSRF y muestra el tiempo de la última muestra, incluyendo red y análisis. La frecuencia real depende de CPU y red; no se garantiza una frecuencia fija ni video continuo anotado. El límite de 1000 muestras puede alcanzarse antes de diez minutos con este ritmo.
 
 Los fotogramas se procesan en memoria y no se guardan. El resultado conserva conteos, tiempos, semántica del detector y modelo; no conserva imágenes del máximo. La vista local muestra el video de cámara y, separadamente, la última muestra analizada con retraso. Al detener o salir se liberan los tracks de cámara. La salida de página intenta cerrar la sesión; si falla la conexión o se cierra abruptamente el navegador, el registro puede quedar procesando. No recibe muestras después de diez minutos y puede cancelarse desde el detalle. No se envía audio.
 

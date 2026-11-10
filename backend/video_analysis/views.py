@@ -10,7 +10,7 @@ from campus.permissions import ReadOrAdmin
 from .client import VisionClient
 from .models import VideoJob
 from .serializers import JobSerializer, UploadSerializer
-from .services import save_summary
+from .services import save_summary, delete_analysis
 
 
 class VideoJobViewSet(viewsets.GenericViewSet):
@@ -23,6 +23,10 @@ class VideoJobViewSet(viewsets.GenericViewSet):
 
     def retrieve(self, request, pk=None):
         return Response(JobSerializer(self.get_object()).data)
+
+    def destroy(self, request, pk=None):
+        delete_analysis(self.get_object().pk, request.user)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=True, methods=["get"], url_path="report")
     def report(self, request, pk=None):
